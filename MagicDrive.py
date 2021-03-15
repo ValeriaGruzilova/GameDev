@@ -7,7 +7,7 @@ display_width = 800
 display_height = 600
 
 display = pygame.display.set_mode((display_width, display_height))
-pygame.display.set_caption('Magic Rush')
+pygame.display.set_caption('Magic Drive')
 
 icon = pygame.image.load('background/icon.jpg')
 pygame.display.set_icon(icon)
@@ -22,27 +22,26 @@ class Barrier:
         self.speed = speed
 
     def move(self):
-        if self.x >= self.width - 40:
+        if self.x >= self.width - 100:
             pygame.draw.rect(display, (224, 121, 31), (self.x, self.y, self.width, self.height))
             self.x -= self.speed
             return True
         else:
-            # self.x = display_width + 100 + random.randrange(-80, 60)
             return False
 
     def return_self(self, radius):
         self.x = radius
 
 
-usr_width = 60
-usr_height = 100
+usr_width = 100
+usr_height = 80
 usr_x = display_width // 3
-usr_y = display_height - usr_height - 100
+usr_y = display_height - usr_height - 82
 
 barrier_width = 20
 barrier_height = 70
 barrier_x = display_width - 50
-barrier_y = display_height - barrier_height - 100
+barrier_y = display_height - barrier_height - 82
 
 clock = pygame.time.Clock()
 
@@ -55,6 +54,7 @@ def run_game():
     game = True
     barrier_arr = []
     create_barrier_arr(barrier_arr)
+    land = pygame.image.load(r'background/backgr.png')
 
     while game:
         for event in pygame.event.get():
@@ -69,7 +69,7 @@ def run_game():
         if make_jump:
             jump()
 
-        display.fill((120, 210, 250))
+        display.blit(land, (0, 0))
         draw_array(barrier_arr)
 
         pygame.draw.rect(display, (247, 240, 22), (usr_x, usr_y, usr_width, usr_height))
@@ -89,9 +89,9 @@ def jump():
 
 
 def create_barrier_arr(array):
-    array.append(Barrier(display_width + 20, display_height - 170, 20, 70, 4))
-    array.append(Barrier(display_width + 300, display_height - 150, 30, 50, 4))
-    array.append(Barrier(display_width + 600, display_height - 180, 25, 80, 4))
+    array.append(Barrier(display_width + 20, display_height - 152, 30, 70, 4))
+    array.append(Barrier(display_width + 300, display_height - 132, 40, 50, 4))
+    array.append(Barrier(display_width + 600, display_height - 112, 70, 30, 4))
 
 
 def find_radius(array):
@@ -99,16 +99,16 @@ def find_radius(array):
 
     if maximum < display_width:
         radius = display_width
-        if radius - maximum < 80:
+        if radius - maximum < 70:
             radius += 150
     else:
         radius = maximum
 
     choice = random.randrange(0, 5)
     if choice == 0:
-        radius += random.randrange(8, 12)
+        radius += random.randrange(10, 15)
     else:
-        radius += random.randrange(200, 350)
+        radius += random.randrange(230, 380)
 
     return radius
 
