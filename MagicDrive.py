@@ -55,26 +55,33 @@ def run_game():
     barrier_arr = []
     create_barrier_arr(barrier_arr)
     land = pygame.image.load(r'background/backgr.png')
+    land_x = 0
 
     while game:
-        for event in pygame.event.get():
+        for event in pygame.event.get():  # выход
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
 
-        keys = pygame.key.get_pressed()
+        keys = pygame.key.get_pressed()  # прыжок
         if keys[pygame.K_SPACE]:
             make_jump = True
 
         if make_jump:
             jump()
 
-        display.blit(land, (0, 0))
-        draw_array(barrier_arr)
+        land_x -= 0.5  # движение фона
+        x_rel = land_x % display_width
+        x_part2 = x_rel - display_width if x_rel > 0 else x_rel + display_width
 
-        pygame.draw.rect(display, (247, 240, 22), (usr_x, usr_y, usr_width, usr_height))
+        display.blit(land, (x_rel, 0))
+        display.blit(land, (x_part2, 0))
 
-        pygame.display.update()
+        draw_array(barrier_arr)  # движение барьеров
+
+        pygame.draw.rect(display, (247, 240, 22), (usr_x, usr_y, usr_width, usr_height))  # персонаж
+
+        pygame.display.update()  # обновление дисплея
         clock.tick(80)
 
 
