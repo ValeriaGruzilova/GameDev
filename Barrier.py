@@ -1,5 +1,6 @@
 from constants import DISPLAY
 
+
 class Barrier:
     def __init__(self, x, y, width, image, speed):
         self.x = x

@@ -65,8 +65,8 @@ def create_barrier_arr(array):
     for i in range(3):
         choice = random.randrange(0, 3)
         img = BARRIER_IMG[choice]
-        width = BARRIER_OPTIONS[choice * 2]
-        height = BARRIER_OPTIONS[choice * 2 + 1]
+        width = BARRIER_OPTIONS[choice][0]
+        height = BARRIER_OPTIONS[choice][1]
         array.append(Barrier(DISPLAY_WIDTH + change_pos, height, width, img, 4))
         change_pos += 300
 
@@ -98,8 +98,8 @@ def draw_array(array):
 
             choice = random.randrange(0, 3)
             img = BARRIER_IMG[choice]
-            width = BARRIER_OPTIONS[choice * 2]
-            height = BARRIER_OPTIONS[choice * 2 + 1]
+            width = BARRIER_OPTIONS[choice][0]
+            height = BARRIER_OPTIONS[choice][1]
 
             barrier.return_self(radius, height, width, img)
 
