@@ -12,18 +12,24 @@ pygame.display.set_caption('Magic Drive')
 icon = pygame.image.load('background/icon.jpg')
 pygame.display.set_icon(icon)
 
+barrier_img = [pygame.image.load('barriers/barr0.png'), pygame.image.load('barriers/barr1.png'),
+               pygame.image.load('barriers/barr2.png')]
+barrier_options = [70, 488, 40, 468, 30, 448]  # ширина и высота относительно дисплея для каждого барьера
+
 
 class Barrier:
-    def __init__(self, x, y, width, height, speed):
+    def __init__(self, x, y, width, height, image, speed):
         self.x = x
         self.y = y
         self.width = width
         self.height = height
+        self.image = image
         self.speed = speed
 
     def move(self):
         if self.x >= self.width - 100:
-            pygame.draw.rect(display, (224, 121, 31), (self.x, self.y, self.width, self.height))
+            # pygame.draw.rect(display, (224, 121, 31), (self.x, self.y, self.width, self.height))
+            display.blit(self.image, (self.x, self.y))
             self.x -= self.speed
             return True
         else:
@@ -96,6 +102,10 @@ def jump():
 
 
 def create_barrier_arr(array):
+    choice = random.randrange(0, 3)
+    img = barrier_img[choice]
+    width = barrier_options[choice * 2]
+    height = barrier_options[choice * 2 + 1]
     array.append(Barrier(display_width + 20, display_height - 152, 30, 70, 4))
     array.append(Barrier(display_width + 300, display_height - 132, 40, 50, 4))
     array.append(Barrier(display_width + 600, display_height - 112, 70, 30, 4))
