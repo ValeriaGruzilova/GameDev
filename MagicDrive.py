@@ -14,29 +14,31 @@ pygame.display.set_icon(icon)
 
 barrier_img = [pygame.image.load('barriers/barr0.png'), pygame.image.load('barriers/barr1.png'),
                pygame.image.load('barriers/barr2.png')]
-barrier_options = [70, 488, 40, 468, 30, 448]  # ширина и высота относительно дисплея для каждого барьера
+barrier_options = [70, 473, 40, 468, 30, 448]  # ширина и высота относительно дисплея для каждого барьера
 
 
 class Barrier:
-    def __init__(self, x, y, width, height, image, speed):
+    def __init__(self, x, y, width, image, speed):
         self.x = x
         self.y = y
         self.width = width
-        self.height = height
         self.image = image
         self.speed = speed
 
     def move(self):
         if self.x >= self.width - 100:
-            # pygame.draw.rect(display, (224, 121, 31), (self.x, self.y, self.width, self.height))
             display.blit(self.image, (self.x, self.y))
             self.x -= self.speed
             return True
         else:
             return False
 
-    def return_self(self, radius):
+    def return_self(self, radius, y, width, image):
         self.x = radius
+        self.y = y
+        self.width = width
+        self.image = image
+        display.blit(self.image, (self.x, self.y))
 
 
 usr_width = 100
@@ -102,13 +104,16 @@ def jump():
 
 
 def create_barrier_arr(array):
-    choice = random.randrange(0, 3)
-    img = barrier_img[choice]
-    width = barrier_options[choice * 2]
-    height = barrier_options[choice * 2 + 1]
-    array.append(Barrier(display_width + 20, display_height - 152, 30, 70, 4))
-    array.append(Barrier(display_width + 300, display_height - 132, 40, 50, 4))
-    array.append(Barrier(display_width + 600, display_height - 112, 70, 30, 4))
+    change_pos = 20
+    for i in range(3):
+        choice = random.randrange(0, 3)
+        img = barrier_img[choice]
+        width = barrier_options[choice * 2]
+        height = barrier_options[choice * 2 + 1]
+        array.append(Barrier(display_width + change_pos, height, width, img, 4))
+        change_pos += 300
+        # array.append(Barrier(display_width + 300, display_height - 132, 40, 50, 4))
+        # array.append(Barrier(display_width + 600, display_height - 112, 70, 30, 4))
 
 
 def find_radius(array):
@@ -135,7 +140,13 @@ def draw_array(array):
         check = barrier.move()
         if not check:
             radius = find_radius(array)
-            barrier.return_self(radius)
+
+            choice = random.randrange(0, 3)
+            img = barrier_img[choice]
+            width = barrier_options[choice * 2]
+            height = barrier_options[choice * 2 + 1]
+
+            barrier.return_self(radius, height, width, img)
 
 
 run_game()
