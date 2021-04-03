@@ -13,7 +13,7 @@ def run_game():
     game = True
     barrier_arr = []
     create_barrier_arr(barrier_arr)
-    land = pygame.image.load(r'background/backgr.png')
+    land = pygame.image.load(r'src/background/backgr.png')
     land_x = 0
 
     make_jump = False
