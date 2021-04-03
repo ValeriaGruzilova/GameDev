@@ -1,3 +1,4 @@
+import random
 from constants import *
 from Barrier import *
 
