@@ -13,7 +13,7 @@ def run_game():
     game = True
     barrier_arr = []
     create_barrier_arr(barrier_arr)
-    land = pygame.image.load(r'src/background/backgr.png')
+    land = pygame.image.load(r'background/backgr.png')
     land_x = 0
 
     make_jump = False
@@ -52,7 +52,7 @@ def run_game():
 
 def jump(make_jump, usr_y, jump_counter):
     if jump_counter[0] >= -30:
-        usr_y[0] -= jump_counter[0] / 2.75
+        usr_y[0] -= jump_counter[0] / 3.4
         jump_counter[0] -= 1
     else:
         jump_counter[0] = 30
