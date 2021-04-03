@@ -3,5 +3,5 @@
 ## Краткое описание проекта:
 Авторская однопользовательская игра в жанре аркада на ПК, написанная на Python 3.9 с использованием библиотеки PyGame.
 ## Авторы:
-GameDevelopment (game designer, coder) — Валерия Грузилова  
+GameDevelopment (game designer, coder & tester) — Валерия Грузилова  
 Artist — Дарина Федер
