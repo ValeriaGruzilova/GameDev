@@ -18,6 +18,9 @@ BARRIER_OPTIONS = [[70, 473],
                    [30, 448]]  # ширина и высота относительно дисплея для каждого барьера
 
 WIZARD_IMG = [pygame.image.load('assets/character/wizard0.png'), pygame.image.load('assets/character/wizard1.png'),
-               pygame.image.load('assets/character/wizard2.png'), pygame.image.load('assets/character/wizard3.png')]
+              pygame.image.load('assets/character/wizard2.png'), pygame.image.load('assets/character/wizard3.png')]
+
+FONT_COLOR = (72, 10, 79)
+FONT_TYPE = 'assets/background/font.otf'
 
 CLOCK = pygame.time.Clock()

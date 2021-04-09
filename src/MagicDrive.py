@@ -30,9 +30,12 @@ def run_game():
                 pygame.quit()
                 quit()
 
-        keys = pygame.key.get_pressed()  # прыжок
+        keys = pygame.key.get_pressed()
         if keys[pygame.K_SPACE]:
             make_jump = True
+
+        if keys[pygame.K_ESCAPE]:
+            pause()
 
         if make_jump:
             make_jump = jump(make_jump, usr_y, jump_counter)
@@ -46,7 +49,6 @@ def run_game():
 
         draw_barrier_array(barrier_arr)  # движение барьеров
 
-        # pygame.draw.rect(DISPLAY, (247, 240, 22), (USR_X, usr_y[0], USR_WIDTH, USR_HEIGHT))  # персонаж
         draw_character(char_img_counter, usr_y)
 
         pygame.display.update()  # обновление дисплея
@@ -118,6 +120,30 @@ def draw_character(img_counter, usr_y):
         img_counter[0] = 16
 
     DISPLAY.blit(WIZARD_IMG[img_counter[0] // 10], (USR_X, usr_y[0]))
+
+
+def print_text(message, x, y, font_size):
+    font = pygame.font.Font(FONT_TYPE, font_size)
+    text = font.render(message, True, FONT_COLOR)
+    DISPLAY.blit(text, (x, y))
+
+
+def pause():
+    paused = True
+    while paused:
+        for event in pygame.event.get():  # выход
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+
+        print_text('PAUSED. Press ENTER to CONTINUE', 150, 250, 40)
+
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_RETURN]:
+            paused = False
+
+        pygame.display.update()
+        CLOCK.tick(15)
 
 
 run_game()
