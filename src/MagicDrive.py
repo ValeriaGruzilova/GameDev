@@ -13,14 +13,16 @@ def run_game():
     game = True
     barrier_arr = []
     create_barrier_arr(barrier_arr)
-    land = pygame.image.load(r'background/backgr.png')
+    land = pygame.image.load('assets/background/backgr.png')
     land_x = 0
 
     make_jump = False
     usr_y = list()
-    usr_y.append(DISPLAY_HEIGHT - USR_HEIGHT - 82)
+    usr_y.append(PRIME_USR_Y)
     jump_counter = list()
     jump_counter.append(30)
+    char_img_counter = list()
+    char_img_counter.append(0)
 
     while game:
         for event in pygame.event.get():  # выход
@@ -42,9 +44,10 @@ def run_game():
         DISPLAY.blit(land, (x_rel, 0))
         DISPLAY.blit(land, (x_part2, 0))
 
-        draw_array(barrier_arr)  # движение барьеров
+        draw_barrier_array(barrier_arr)  # движение барьеров
 
-        pygame.draw.rect(DISPLAY, (247, 240, 22), (USR_X, usr_y[0], USR_WIDTH, USR_HEIGHT))  # персонаж
+        # pygame.draw.rect(DISPLAY, (247, 240, 22), (USR_X, usr_y[0], USR_WIDTH, USR_HEIGHT))  # персонаж
+        draw_character(char_img_counter, usr_y)
 
         pygame.display.update()  # обновление дисплея
         CLOCK.tick(75)
@@ -52,7 +55,7 @@ def run_game():
 
 def jump(make_jump, usr_y, jump_counter):
     if jump_counter[0] >= -30:
-        usr_y[0] -= jump_counter[0] / 3.4
+        usr_y[0] -= jump_counter[0] / 4.0
         jump_counter[0] -= 1
     else:
         jump_counter[0] = 30
@@ -91,7 +94,7 @@ def find_radius(array):
     return radius
 
 
-def draw_array(array):
+def draw_barrier_array(array):
     for barrier in array:
         check = barrier.move()
         if not check:
@@ -103,6 +106,18 @@ def draw_array(array):
             height = BARRIER_OPTIONS[choice][1]
 
             barrier.return_self(radius, height, width, img)
+
+
+def draw_character(img_counter, usr_y):
+    if img_counter[0] == 39:
+        img_counter[0] = 0
+
+    if usr_y[0] == PRIME_USR_Y:
+        img_counter[0] += 1
+    else:
+        img_counter[0] = 16
+
+    DISPLAY.blit(WIZARD_IMG[img_counter[0] // 10], (USR_X, usr_y[0]))
 
 
 run_game()
