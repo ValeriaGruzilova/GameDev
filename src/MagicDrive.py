@@ -34,9 +34,6 @@ def run_game():
         if keys[pygame.K_SPACE]:
             make_jump = True
 
-        if keys[pygame.K_ESCAPE]:
-            pause()
-
         if make_jump:
             make_jump = jump(make_jump, usr_y, jump_counter)
 
@@ -51,8 +48,22 @@ def run_game():
 
         draw_character(char_img_counter, usr_y)
 
+        if check_collision(barrier_arr, usr_y):
+            game = False
+
+        if keys[pygame.K_ESCAPE]:
+            pause()
+
         pygame.display.update()  # обновление дисплея
         CLOCK.tick(75)
+    return not game_over()
+
+
+def application():
+    while run_game():
+        pass
+    pygame.quit()
+    quit()
 
 
 def jump(make_jump, usr_y, jump_counter):
@@ -146,4 +157,48 @@ def pause():
         CLOCK.tick(15)
 
 
-run_game()
+def check_collision(barriers, usr_y):
+    for barrier in barriers:
+        if usr_y[0] + USR_HEIGHT >= barrier.y:
+            if barrier.x <= USR_X <= barrier.x + barrier.width - 10:
+                return True
+            elif barrier.x <= USR_X + USR_WIDTH <= barrier.x + barrier.width:
+                return True
+    return False
+
+
+def game_over():
+    stopped = True
+    while stopped:
+        for event in pygame.event.get():  # выход
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+
+        print_text('GAME OVER. Press ENTER to RESTART', 130, 250, 40)
+        print_text('Press ESC to EXIT', 260, 310, 40)
+
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_RETURN]:
+            restart()
+            return False
+        if keys[pygame.K_ESCAPE]:
+            return True
+
+        pygame.display.update()
+        CLOCK.tick(15)
+
+
+def restart():
+    for i in range(60):
+        if i <= 20:
+            print_text('3..', 260, 150, 100)
+        elif 20 < i <= 40:
+            print_text('2..', 360, 150, 100)
+        else:
+            print_text('1..', 460, 150, 100)
+        pygame.display.update()
+        CLOCK.tick(15)
+
+
+application()
