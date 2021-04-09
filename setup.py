@@ -12,7 +12,7 @@ setuptools.setup(
     name=name,
     version=version,
     cmdclass=cmdclass,
-    author='Valery Gruzilova',
+    author='Valeria Gruzilova',
     description='single-player arcade game for pc',
     long_description=long_description,
     long_description_content_type='text/markdown',

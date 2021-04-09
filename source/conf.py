@@ -18,8 +18,8 @@
 # -- Project information -----------------------------------------------------
 
 project = 'MagicDrive'
-copyright = '2021, Valery Gruzilova'
-author = 'Valery Gruzilova'
+copyright = '2021, Valeria Gruzilova'
+author = 'Valeria Gruzilova'
 
 # The full version, including alpha/beta/rc tags
 release = '1'
