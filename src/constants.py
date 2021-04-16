@@ -13,7 +13,7 @@ PRIME_USR_Y = DISPLAY_HEIGHT - USR_HEIGHT - 82
 
 BARRIER_IMG = [pygame.image.load('assets/barriers/barr0.png'), pygame.image.load('assets/barriers/barr1.png'),
                pygame.image.load('assets/barriers/barr2.png')]
-BARRIER_OPTIONS = [[70, 473],
+BARRIER_OPTIONS = [[70, 478],
                    [40, 468],
                    [30, 448]]  # ширина и высота относительно дисплея для каждого барьера
 
