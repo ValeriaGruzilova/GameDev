@@ -162,7 +162,7 @@ def check_collision(barriers, usr_y):
         if usr_y[0] + USR_HEIGHT >= barrier.y:
             if barrier.x <= USR_X <= barrier.x + barrier.width - 10:
                 return True
-            elif barrier.x <= USR_X + USR_WIDTH <= barrier.x + barrier.width:
+            elif barrier.x <= USR_X + USR_WIDTH - 5 <= barrier.x + barrier.width - 5:
                 return True
     return False
 
