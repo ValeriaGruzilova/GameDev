@@ -147,7 +147,7 @@ def pause():
                 pygame.quit()
                 quit()
 
-        print_text('PAUSED. Press ENTER to CONTINUE', 150, 250, 40)
+        print_text('PAUSED. Press ENTER to CONTINUE', 130, 250, 50)
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_RETURN]:
@@ -175,8 +175,8 @@ def game_over():
                 pygame.quit()
                 quit()
 
-        print_text('GAME OVER. Press ENTER to RESTART', 130, 250, 40)
-        print_text('Press ESC to EXIT', 260, 310, 40)
+        print_text('GAME OVER. Press ENTER to RESTART', 110, 250, 50)
+        print_text('Press ESC to EXIT', 240, 310, 50)
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_RETURN]:

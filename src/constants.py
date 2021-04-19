@@ -21,6 +21,6 @@ WIZARD_IMG = [pygame.image.load('assets/character/wizard0.png'), pygame.image.lo
               pygame.image.load('assets/character/wizard2.png'), pygame.image.load('assets/character/wizard3.png')]
 
 FONT_COLOR = (72, 10, 79)
-FONT_TYPE = 'assets/background/font.otf'
+FONT_TYPE = 'assets/background/font.ttf'
 
 CLOCK = pygame.time.Clock()
