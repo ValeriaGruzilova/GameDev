@@ -8,8 +8,12 @@ pygame.display.set_caption('Magic Drive')
 
 pygame.display.set_icon(ICON)
 
+scores = 0
+max_scores = 0
+
 
 def run_game():
+    global scores
     game = True
     barrier_arr = []
     create_barrier_arr(barrier_arr)
@@ -30,12 +34,16 @@ def run_game():
                 pygame.quit()
                 quit()
 
+
+
         keys = pygame.key.get_pressed()
         if keys[pygame.K_SPACE]:
             make_jump = True
 
         if make_jump:
             make_jump = jump(make_jump, usr_y, jump_counter)
+
+        count_scores(barrier_arr)
 
         land_x -= 0.5  # движение фона
         x_rel = land_x % DISPLAY_WIDTH
@@ -44,14 +52,19 @@ def run_game():
         DISPLAY.blit(land, (x_rel, 0))
         DISPLAY.blit(land, (x_part2, 0))
 
+        print_text("Score: " + str(scores), 20, 80, 45)
+
         draw_barrier_array(barrier_arr)  # движение барьеров
 
         draw_character(char_img_counter, usr_y)
 
         if check_collision(barrier_arr, usr_y):
+            print_text('GAME OVER. Press ENTER to RESTART', 110, 250, 50)
+            print_text('Press ESC to EXIT', 240, 310, 50)
             game = False
 
         if keys[pygame.K_ESCAPE]:
+            print_text('PAUSED. Press ENTER to CONTINUE', 130, 250, 50)
             pause()
 
         pygame.display.update()  # обновление дисплея
@@ -60,8 +73,9 @@ def run_game():
 
 
 def application():
+    global scores
     while run_game():
-        pass
+        scores = 0
     pygame.quit()
     quit()
 
@@ -94,7 +108,7 @@ def find_radius(array):
     if maximum < DISPLAY_WIDTH:
         radius = DISPLAY_WIDTH
         if radius - maximum < 70:
-            radius += 150
+            radius += 250
     else:
         radius = maximum
 
@@ -147,14 +161,12 @@ def pause():
                 pygame.quit()
                 quit()
 
-        print_text('PAUSED. Press ENTER to CONTINUE', 130, 250, 50)
-
         keys = pygame.key.get_pressed()
         if keys[pygame.K_RETURN]:
             paused = False
 
         pygame.display.update()
-        CLOCK.tick(15)
+        CLOCK.tick(35)
 
 
 def check_collision(barriers, usr_y):
@@ -168,15 +180,16 @@ def check_collision(barriers, usr_y):
 
 
 def game_over():
+    # global scores, max_scores
+    # if scores > max_scores:
+    #    max_scores = scores
+
     stopped = True
     while stopped:
         for event in pygame.event.get():  # выход
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-
-        print_text('GAME OVER. Press ENTER to RESTART', 110, 250, 50)
-        print_text('Press ESC to EXIT', 240, 310, 50)
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_RETURN]:
@@ -186,19 +199,26 @@ def game_over():
             return True
 
         pygame.display.update()
-        CLOCK.tick(15)
+        CLOCK.tick(35)
 
 
 def restart():
-    for i in range(60):
-        if i <= 20:
-            print_text('3..', 260, 150, 100)
-        elif 20 < i <= 40:
-            print_text('2..', 360, 150, 100)
+    for i in range(90):
+        if i <= 30:
+            print_text('3..', 310, 150, 80)
+        elif 30 < i <= 60:
+            print_text('2..', 380, 150, 80)
         else:
-            print_text('1..', 460, 150, 100)
+            print_text('1..', 450, 150, 80)
         pygame.display.update()
-        CLOCK.tick(15)
+        CLOCK.tick(25)
+
+
+def count_scores(barriers):
+    global scores
+    for barrier in barriers:
+        if barrier.x - 1 <= USR_X <= barrier.x + 2:
+            scores += 1
 
 
 application()
