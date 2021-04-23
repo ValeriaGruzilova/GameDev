@@ -15,6 +15,8 @@ pygame.display.set_icon(ICON)
 scores = 0
 max_scores = 0
 
+health = 2
+
 
 def run_game():
     pygame.mixer.music.play(-1)
@@ -67,6 +69,8 @@ def run_game():
             print_text('Press ESC to EXIT', 240, 310, 50)
             game = False
 
+        show_health()
+
         if keys[pygame.K_ESCAPE]:
             print_text('PAUSED. Press ENTER to CONTINUE', 130, 250, 50)
             pause()
@@ -78,8 +82,10 @@ def run_game():
 
 def application():
     global scores
+    global health
     while run_game():
         scores = 0
+        health = 2
     pygame.quit()
     quit()
 
@@ -182,9 +188,17 @@ def check_collision(barriers, usr_y):
     for barrier in barriers:
         if usr_y[0] + USR_HEIGHT >= barrier.y:
             if barrier.x <= USR_X <= barrier.x + barrier.width - 10:
-                return True
+                if check_health():
+                    return_object(barriers, barrier)
+                    return False
+                else:
+                    return True
             elif barrier.x <= USR_X + USR_WIDTH - 5 <= barrier.x + barrier.width - 5:
-                return True
+                if check_health():
+                    return_object(barriers, barrier)
+                    return False
+                else:
+                    return True
     return False
 
 
@@ -228,6 +242,36 @@ def count_scores(barriers):
     for barrier in barriers:
         if barrier.x - 1 <= USR_X <= barrier.x + 2:
             scores += 1
+
+
+def show_health():
+    global health
+    shown = 0
+    coord = 20
+    while shown != health:
+        DISPLAY.blit(HEALTH_IMG, (coord, 20))
+        coord += 55
+        shown += 1
+
+
+def check_health():
+    global health
+    health -= 1
+    if health == 0:
+        return False
+    else:
+        return True
+
+
+def return_object(objects, obj):
+    radius = find_radius(objects)
+
+    choice = random.randrange(0, 3)
+    img = BARRIER_IMG[choice]
+    width = BARRIER_OPTIONS[choice][0]
+    height = BARRIER_OPTIONS[choice][1]
+
+    obj.return_self(radius, height, width, img)
 
 
 application()
