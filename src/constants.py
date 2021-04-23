@@ -21,7 +21,7 @@ WIZARD_IMG = [pygame.image.load('assets/character/wizard0.png'), pygame.image.lo
               pygame.image.load('assets/character/wizard2.png'), pygame.image.load('assets/character/wizard3.png')]
 
 HEALTH_IMG = pygame.image.load('assets/objects/heart40.png')
-#HEALTH_IMG = pygame.transform.scale(HEALTH_IMG, (40, 43))
+HEALTH_MINI_IMG = pygame.transform.scale(HEALTH_IMG, (30, 30))
 
 FONT_COLOR = (72, 10, 79)
 FONT_TYPE = 'assets/background/font.ttf'

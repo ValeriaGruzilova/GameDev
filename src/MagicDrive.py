@@ -1,6 +1,6 @@
 import random
 from constants import *
-from Barrier import *
+from Object import *
 
 pygame.mixer.pre_init(44100, -16, 1, 512)
 pygame.init()
@@ -34,6 +34,8 @@ def run_game():
     jump_counter.append(30)
     char_img_counter = list()
     char_img_counter.append(0)
+
+    heart = Object(2 * DISPLAY_WIDTH, 360, 30, HEALTH_MINI_IMG, 4)
 
     while game:
         for event in pygame.event.get():  # выход
@@ -75,6 +77,9 @@ def run_game():
             print_text('PAUSED. Press ENTER to CONTINUE', 130, 250, 50)
             pause()
 
+        heart.move()
+        hearts_plus(heart, usr_y)
+
         pygame.display.update()  # обновление дисплея
         CLOCK.tick(75)
     return not game_over()
@@ -108,7 +113,7 @@ def create_barrier_arr(array):
         img = BARRIER_IMG[choice]
         width = BARRIER_OPTIONS[choice][0]
         height = BARRIER_OPTIONS[choice][1]
-        array.append(Barrier(DISPLAY_WIDTH + change_pos, height, width, img, 4))
+        array.append(Object(DISPLAY_WIDTH + change_pos, height, width, img, 4))
         change_pos += 300
 
 
@@ -272,6 +277,21 @@ def return_object(objects, obj):
     height = BARRIER_OPTIONS[choice][1]
 
     obj.return_self(radius, height, width, img)
+
+
+def hearts_plus(heart, usr_y):
+    global health
+    if heart.x <= -heart.width:
+        radius = DISPLAY_WIDTH + random.randrange(2000, 3700)
+        heart.return_self(radius, heart.y, heart.width, heart.image)
+
+    if USR_X <= heart.x <= USR_X + USR_WIDTH:
+        if usr_y[0] <= heart.y <= usr_y[0] + USR_HEIGHT:
+            if health < 3:
+                health += 1
+
+            radius = DISPLAY_WIDTH + random.randrange(3000, 4700)
+            heart.return_self(radius, heart.y, heart.width, heart.image)
 
 
 application()
