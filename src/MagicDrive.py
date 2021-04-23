@@ -2,9 +2,13 @@ import random
 from constants import *
 from Barrier import *
 
+pygame.mixer.pre_init(44100, -16, 1, 512)
 pygame.init()
 
 pygame.display.set_caption('Magic Drive')
+
+pygame.mixer.music.load('assets/background/music.mp3')
+pygame.mixer.music.set_volume(0.3)
 
 pygame.display.set_icon(ICON)
 
@@ -13,7 +17,8 @@ max_scores = 0
 
 
 def run_game():
-    global scores
+    pygame.mixer.music.play(-1)
+
     game = True
     barrier_arr = []
     create_barrier_arr(barrier_arr)
@@ -33,8 +38,6 @@ def run_game():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-
-
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_SPACE]:
@@ -59,6 +62,7 @@ def run_game():
         draw_character(char_img_counter, usr_y)
 
         if check_collision(barrier_arr, usr_y):
+            pygame.mixer.music.stop()
             print_text('GAME OVER. Press ENTER to RESTART', 110, 250, 50)
             print_text('Press ESC to EXIT', 240, 310, 50)
             game = False
@@ -155,6 +159,9 @@ def print_text(message, x, y, font_size):
 
 def pause():
     paused = True
+
+    pygame.mixer.music.pause()
+
     while paused:
         for event in pygame.event.get():  # выход
             if event.type == pygame.QUIT:
@@ -167,6 +174,8 @@ def pause():
 
         pygame.display.update()
         CLOCK.tick(35)
+
+    pygame.mixer.music.unpause()
 
 
 def check_collision(barriers, usr_y):
