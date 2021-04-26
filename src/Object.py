@@ -23,3 +23,6 @@ class Object:
         self.width = width
         self.image = image
         DISPLAY.blit(self.image, (self.x, self.y))
+
+    def set_speed(self, speed):
+        self.speed = speed

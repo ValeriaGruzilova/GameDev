@@ -38,6 +38,8 @@ def run_game():
     heart = Object(2 * DISPLAY_WIDTH, 360, 30, HEALTH_MINI_IMG, 4)
 
     while game:
+        change_speed(barrier_arr, heart)
+
         for event in pygame.event.get():  # выход
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -292,6 +294,14 @@ def hearts_plus(heart, usr_y):
 
             radius = DISPLAY_WIDTH + random.randrange(3000, 4700)
             heart.return_self(radius, heart.y, heart.width, heart.image)
+
+
+def change_speed(barriers, heart):
+    global scores
+    new_speed = scores // 20 / 4 + 4
+    for barrier in barriers:
+        barrier.set_speed(new_speed)
+    heart.set_speed(new_speed)
 
 
 application()
