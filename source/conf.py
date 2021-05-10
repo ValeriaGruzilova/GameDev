@@ -17,7 +17,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'MagicDrive'
+project = 'Magic Rush'
 copyright = '2021, Valeria Gruzilova'
 author = 'Valeria Gruzilova'
 
