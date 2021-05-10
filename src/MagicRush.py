@@ -5,7 +5,7 @@ from Object import *
 pygame.mixer.pre_init(44100, -16, 1, 512)
 pygame.init()
 
-pygame.display.set_caption('Magic Drive')
+pygame.display.set_caption('Magic Rush')
 
 pygame.mixer.music.load('assets/background/music.mp3')
 pygame.mixer.music.set_volume(0.3)
@@ -247,7 +247,7 @@ def restart():
 def count_scores(barriers):
     global scores
     for barrier in barriers:
-        if barrier.x - 1 <= USR_X <= barrier.x + 2:
+        if barrier.x - barrier.speed + 3 <= USR_X <= barrier.x + barrier.speed - 2:
             scores += 1
 
 
