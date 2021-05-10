@@ -1,0 +1,9 @@
+LICENSE
+MANIFEST.in
+README.md
+pyproject.toml
+setup.py
+src/Magic_Rush.egg-info/PKG-INFO
+src/Magic_Rush.egg-info/SOURCES.txt
+src/Magic_Rush.egg-info/dependency_links.txt
+src/Magic_Rush.egg-info/top_level.txt

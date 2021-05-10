@@ -1,9 +1,9 @@
-.. MagicDrive documentation master file, created by
-   sphinx-quickstart on Fri Apr  9 13:59:08 2021.
+.. Magic Rush documentation master file, created by
+   sphinx-quickstart on Mon May 10 12:38:49 2021.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to MagicDrive's documentation!
+Welcome to Magic Rush's documentation!
 ======================================
 
 .. toctree::
