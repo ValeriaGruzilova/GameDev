@@ -19,6 +19,13 @@ health = 2
 
 
 def run_game():
+    """Basic application function that calls helper functions and starts the main processes.
+
+    Args:
+        None.
+    Returns:
+        boolean value that means whether there is a signal from the user to end the game or not.
+    """
     pygame.mixer.music.play(-1)
 
     game = True
@@ -87,7 +94,14 @@ def run_game():
     return not game_over()
 
 
-def application():
+def launch_app():
+    """Launches the application and updates the points and health of the character with each restart.
+
+    Args:
+        None.
+    Returns:
+        None.
+    """
     global scores
     global health
     while run_game():
@@ -98,6 +112,15 @@ def application():
 
 
 def jump(make_jump, usr_y, jump_counter):
+    """Moves the character up and down on the y-axis to create the illusion of a jump.
+
+    Args:
+        make_jump: boolean value about the need to jump.
+        usr_y: user y coordinate.
+        jump_counter: counter displacement of the character during a jump.
+    Returns:
+        make_jump: boolean value about the need to jump.
+    """
     if jump_counter[0] >= -30:
         usr_y[0] -= jump_counter[0] / 4.0
         jump_counter[0] -= 1
@@ -109,6 +132,13 @@ def jump(make_jump, usr_y, jump_counter):
 
 
 def create_barrier_arr(array):
+    """Creates and initializes an array of 3 random barrier objects.
+
+    Args:
+        array: array of barrier objects.
+    Returns:
+        None.
+    """
     change_pos = 20
     for i in range(3):
         choice = random.randrange(0, 3)
@@ -120,6 +150,13 @@ def create_barrier_arr(array):
 
 
 def find_radius(array):
+    """Generates a radius of far or near placement of barriers.
+
+    Args:
+        array: array of barrier objects.
+    Returns:
+        radius: integer value of the new coordinate of the object.
+    """
     maximum = max(array[0].x, array[1].x, array[2].x)
 
     if maximum < DISPLAY_WIDTH:
@@ -139,6 +176,13 @@ def find_radius(array):
 
 
 def draw_barrier_array(array):
+    """If the object is outside the display boundary, a new random object is drawn with a new spawn radius.
+
+    Args:
+        array: array of barrier objects.
+    Returns:
+        None.
+    """
     for barrier in array:
         check = barrier.move()
         if not check:
@@ -153,6 +197,14 @@ def draw_barrier_array(array):
 
 
 def draw_character(img_counter, usr_y):
+    """Draws animation of the character's movement and jumping (phase change).
+
+    Args:
+        img_counter: character animation counter.
+        usr_y: user y coordinate.
+    Returns:
+        None.
+    """
     if img_counter[0] == 39:
         img_counter[0] = 0
 
@@ -171,6 +223,13 @@ def print_text(message, x, y, font_size):
 
 
 def pause():
+    """Pauses the game and music, waits for a signal from the user to continue the game.
+
+    Args:
+        None.
+    Returns:
+        None.
+    """
     paused = True
 
     pygame.mixer.music.pause()
@@ -192,17 +251,25 @@ def pause():
 
 
 def check_collision(barriers, usr_y):
+    """When the character object and the barrier object collides, checks the presence of health.
+
+    Args:
+        barriers: array of barrier objects.
+        usr_y: user y coordinate.
+    Returns:
+        boolean value indicating whether there was a fatal collision.
+    """
     for barrier in barriers:
         if usr_y[0] + USR_HEIGHT >= barrier.y:
             if barrier.x <= USR_X <= barrier.x + barrier.width - 10:
                 if check_health():
-                    return_object(barriers, barrier)
+                    return_barrier(barriers, barrier)
                     return False
                 else:
                     return True
             elif barrier.x <= USR_X + USR_WIDTH - 5 <= barrier.x + barrier.width - 5:
                 if check_health():
-                    return_object(barriers, barrier)
+                    return_barrier(barriers, barrier)
                     return False
                 else:
                     return True
@@ -210,6 +277,13 @@ def check_collision(barriers, usr_y):
 
 
 def game_over():
+    """Depending on the user's choice, starts the restart or the end of the game.
+
+    Args:
+        None.
+    Returns:
+        boolean value that means whether there is a signal from the user to end the game or not.
+    """
     # global scores, max_scores
     # if scores > max_scores:
     #    max_scores = scores
@@ -270,18 +344,34 @@ def check_health():
         return True
 
 
-def return_object(objects, obj):
-    radius = find_radius(objects)
+def return_barrier(barriers, barr):
+    """Returns a random barrier object to a new coordinate.
+
+    Args:
+        barriers: array of barrier objects.
+        barr: barrier object.
+    Returns:
+        None.
+    """
+    radius = find_radius(barriers)
 
     choice = random.randrange(0, 3)
     img = BARRIER_IMG[choice]
     width = BARRIER_OPTIONS[choice][0]
     height = BARRIER_OPTIONS[choice][1]
 
-    obj.return_self(radius, height, width, img)
+    barr.return_self(radius, height, width, img)
 
 
 def hearts_plus(heart, usr_y):
+    """When a character catches a heart, increases health and returns the heart object to a new coordinate.
+
+    Args:
+        heart: character health object.
+        usr_y: user y coordinate.
+    Returns:
+        None.
+    """
     global health
     if heart.x <= -heart.width:
         radius = DISPLAY_WIDTH + random.randrange(2000, 3700)
@@ -297,6 +387,14 @@ def hearts_plus(heart, usr_y):
 
 
 def change_speed(barriers, heart):
+    """Increases the speed of barriers and hearts every 20 points and calls the setter.
+
+    Args:
+        barriers: array of barrier objects.
+        heart: character health object.
+    Returns:
+        None.
+    """
     global scores
     new_speed = scores // 20 / 4 + 4
     for barrier in barriers:
@@ -304,4 +402,4 @@ def change_speed(barriers, heart):
     heart.set_speed(new_speed)
 
 
-application()
+launch_app()

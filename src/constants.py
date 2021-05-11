@@ -20,8 +20,8 @@ BARRIER_OPTIONS = [[70, 478],
 WIZARD_IMG = [pygame.image.load('assets/character/wizard0.png'), pygame.image.load('assets/character/wizard1.png'),
               pygame.image.load('assets/character/wizard2.png'), pygame.image.load('assets/character/wizard3.png')]
 
-HEALTH_IMG = pygame.image.load('assets/objects/heart40.png')
-HEALTH_MINI_IMG = pygame.transform.scale(HEALTH_IMG, (30, 30))
+HEALTH_IMG = pygame.image.load('assets/objects/heart_40.png')
+HEALTH_MINI_IMG = pygame.image.load('assets/objects/heart_30.png')
 
 FONT_COLOR = (72, 10, 79)
 FONT_TYPE = 'assets/background/font.ttf'

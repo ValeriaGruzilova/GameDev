@@ -1,9 +1,0 @@
-LICENSE
-MANIFEST.in
-README.md
-pyproject.toml
-setup.py
-src/MagicDrive.egg-info/PKG-INFO
-src/MagicDrive.egg-info/SOURCES.txt
-src/MagicDrive.egg-info/dependency_links.txt
-src/MagicDrive.egg-info/top_level.txt
