@@ -1,6 +1,7 @@
 import random
 from constants import *
 from Object import *
+from Button import *
 
 pygame.mixer.pre_init(44100, -16, 1, 512)
 pygame.init()
@@ -8,7 +9,7 @@ pygame.init()
 pygame.display.set_caption('Magic Rush')
 
 pygame.mixer.music.load('assets/background/music.mp3')
-pygame.mixer.music.set_volume(0.3)
+pygame.mixer.music.set_volume(0.2)
 
 pygame.display.set_icon(ICON)
 
@@ -16,6 +17,28 @@ scores = 0
 max_scores = 0
 
 health = 2
+
+
+def show_menu():
+    show = True
+    start_message = "START GAME"
+    quit_message = "EXIT"
+
+    start_button = Button(180, 55)
+    quit_button = Button(110, 55)
+
+    while show:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+
+        DISPLAY.blit(MENU_BACKGR, (0, 0))
+        start_button.draw(310, 320, start_message, launch_game)
+        quit_button.draw(340, 420, quit_message, quit)
+
+        pygame.display.update()
+        CLOCK.tick(60)
 
 
 def run_game():
@@ -31,8 +54,8 @@ def run_game():
     game = True
     barrier_arr = []
     create_barrier_arr(barrier_arr)
-    land = pygame.image.load('assets/background/backgr.png')
-    land_x = 0
+    background = pygame.image.load('assets/background/backgr.png')
+    background_x = 0
 
     make_jump = False
     usr_y = list()
@@ -47,7 +70,7 @@ def run_game():
     while game:
         change_speed(barrier_arr, heart)
 
-        for event in pygame.event.get():  # выход
+        for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
@@ -61,16 +84,16 @@ def run_game():
 
         count_scores(barrier_arr)
 
-        land_x -= 0.5  # движение фона
-        x_rel = land_x % DISPLAY_WIDTH
+        background_x -= 0.5  # background movement
+        x_rel = background_x % DISPLAY_WIDTH
         x_part2 = x_rel - DISPLAY_WIDTH if x_rel > 0 else x_rel + DISPLAY_WIDTH
 
-        DISPLAY.blit(land, (x_rel, 0))
-        DISPLAY.blit(land, (x_part2, 0))
+        DISPLAY.blit(background, (x_rel, 0))
+        DISPLAY.blit(background, (x_part2, 0))
 
         print_text("Score: " + str(scores), 20, 80, 45)
 
-        draw_barrier_array(barrier_arr)  # движение барьеров
+        draw_barrier_array(barrier_arr)  # barriers` movement
 
         draw_character(char_img_counter, usr_y)
 
@@ -89,13 +112,13 @@ def run_game():
         heart.move()
         hearts_plus(heart, usr_y)
 
-        pygame.display.update()  # обновление дисплея
+        pygame.display.update()
         CLOCK.tick(75)
     return not game_over()
 
 
-def launch_app():
-    """Launches the application and updates the points and health of the character with each restart.
+def launch_game():
+    """Launches the game and updates the points and health of the character with each restart.
 
     Args:
         None.
@@ -104,11 +127,17 @@ def launch_app():
     """
     global scores
     global health
+
     while run_game():
         scores = 0
         health = 2
-    pygame.quit()
-    quit()
+
+    scores = 0
+    health = 2
+
+    show_menu()
+    # pygame.quit()
+    # quit()
 
 
 def jump(make_jump, usr_y, jump_counter):
@@ -235,7 +264,7 @@ def pause():
     pygame.mixer.music.pause()
 
     while paused:
-        for event in pygame.event.get():  # выход
+        for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
@@ -290,7 +319,7 @@ def game_over():
 
     stopped = True
     while stopped:
-        for event in pygame.event.get():  # выход
+        for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
@@ -402,4 +431,5 @@ def change_speed(barriers, heart):
     heart.set_speed(new_speed)
 
 
-launch_app()
+show_menu()
+# launch_app()

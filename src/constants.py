@@ -27,3 +27,5 @@ FONT_COLOR = (72, 10, 79)
 FONT_TYPE = 'assets/background/font.ttf'
 
 CLOCK = pygame.time.Clock()
+
+MENU_BACKGR = pygame.image.load('assets/background/menu.png')
