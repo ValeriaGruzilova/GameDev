@@ -8,9 +8,6 @@ pygame.init()
 
 pygame.display.set_caption('Magic Rush')
 
-pygame.mixer.music.load('assets/background/music.mp3')
-pygame.mixer.music.set_volume(0.2)
-
 pygame.display.set_icon(ICON)
 
 scores = 0
@@ -20,6 +17,11 @@ health = 2
 
 
 def show_menu():
+    pygame.mixer.music.load('assets/background/menu_music.mp3')
+    pygame.mixer.music.set_volume(0.3)
+
+    pygame.mixer.music.play(-1)
+
     show = True
     start_message = "START GAME"
     quit_message = "EXIT"
@@ -40,6 +42,8 @@ def show_menu():
         pygame.display.update()
         CLOCK.tick(60)
 
+    pygame.mixer.music.stop()
+
 
 def run_game():
     """Basic application function that calls helper functions and starts the main processes.
@@ -49,6 +53,9 @@ def run_game():
     Returns:
         boolean value that means whether there is a signal from the user to end the game or not.
     """
+    pygame.mixer.music.load('assets/background/music.mp3')
+    pygame.mixer.music.set_volume(0.2)
+
     pygame.mixer.music.play(-1)
 
     game = True
