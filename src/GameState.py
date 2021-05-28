@@ -4,7 +4,8 @@ from enum import Enum
 class State(Enum):
     MENU = 0,
     START = 1,
-    QUIT = 2
+    SCORES_TABLE = 2,
+    QUIT = 3
 
 
 class GameState:
