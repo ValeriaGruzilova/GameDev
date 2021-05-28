@@ -9,7 +9,8 @@ class Button:
             height: button height.
             inactive_color: rgb-code of inactive button`s color.
             active_color: rgb-code of active button`s color.
-        """
+    """
+
     def __init__(self, width, height):
         """Initializes Button with button width, button height, inactive and active colors."""
         self.width = width
@@ -28,20 +29,24 @@ class Button:
         Returns:
             None.
         """
-        mouse_coord = pygame.mouse.get_pos()  # mouse_coord[0] = x; mouse_coord[1] = y
-        click = pygame.mouse.get_pressed()  # click[0] = left mouse button pressed
+        mouse_coord = pygame.mouse.get_pos()
+        # mouse_coord[0] = x; mouse_coord[1] = y
+        click = pygame.mouse.get_pressed()
         pygame.draw.rect(DISPLAY, self.inactive_color, (x_btn, y_btn, self.width, self.height))
         if x_btn < mouse_coord[0] < x_btn + self.width:
             if y_btn < mouse_coord[1] < y_btn + self.height:
                 pygame.draw.rect(DISPLAY, self.active_color, (x_btn, y_btn, self.width, self.height))
 
                 if click[0] == 1:
+                    # click[0] = left mouse button pressed
                     pygame.time.delay(300)
                     if action is not None:
-                        if action == quit:
-                            pygame.quit()
-                            quit()
+                        # if action == quit:
+                        #    pygame.quit()
+                        #    quit()
                         action()
+                    else:
+                        return True
 
         self.print_text(message, x_btn, y_btn, 30)
 

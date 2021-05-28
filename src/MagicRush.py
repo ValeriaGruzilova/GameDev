@@ -2,6 +2,7 @@ import random
 from constants import *
 from Object import *
 from Button import *
+from GameState import *
 
 pygame.mixer.pre_init(44100, -16, 1, 512)
 pygame.init()
@@ -15,8 +16,32 @@ max_scores = 0
 
 health = 2
 
+game_state = GameState()
+
+
+def start():
+    """In accordance with the established states, calls the basic functions.
+
+            Args:
+                None.
+            Returns:
+                None.
+    """
+    while game_state.state != State.QUIT:
+        if game_state.state == State.MENU:
+            show_menu()
+        elif game_state.state == State.START:
+            launch_game()
+
 
 def show_menu():
+    """Demonstrates a menu with buttons.
+
+        Args:
+            None.
+        Returns:
+            None.
+    """
     pygame.mixer.music.load('assets/background/menu_music.mp3')
     pygame.mixer.music.set_volume(0.3)
 
@@ -36,8 +61,12 @@ def show_menu():
                 quit()
 
         DISPLAY.blit(MENU_BACKGR, (0, 0))
-        start_button.draw(310, 320, start_message, launch_game)
-        quit_button.draw(340, 420, quit_message, quit)
+        if start_button.draw(310, 320, start_message):
+            game_state.set_state(State.START)
+            return
+        if quit_button.draw(340, 420, quit_message):
+            game_state.set_state(State.QUIT)
+            return
 
         pygame.display.update()
         CLOCK.tick(60)
@@ -90,8 +119,8 @@ def run_game():
             make_jump = jump(make_jump, usr_y, jump_counter)
 
         count_scores(barrier_arr)
-
-        background_x -= 0.5  # background movement
+        # background movement
+        background_x -= 0.5
         x_rel = background_x % DISPLAY_WIDTH
         x_part2 = x_rel - DISPLAY_WIDTH if x_rel > 0 else x_rel + DISPLAY_WIDTH
 
@@ -99,8 +128,8 @@ def run_game():
         DISPLAY.blit(background, (x_part2, 0))
 
         print_text("Score: " + str(scores), 20, 80, 45)
-
-        draw_barrier_array(barrier_arr)  # barriers` movement
+        # barriers` movement
+        draw_barrier_array(barrier_arr)
 
         draw_character(char_img_counter, usr_y)
 
@@ -142,9 +171,7 @@ def launch_game():
     scores = 0
     health = 2
 
-    show_menu()
-    # pygame.quit()
-    # quit()
+    game_state.set_state(State.MENU)
 
 
 def jump(make_jump, usr_y, jump_counter):
@@ -438,5 +465,6 @@ def change_speed(barriers, heart):
     heart.set_speed(new_speed)
 
 
-show_menu()
-# launch_app()
+start()
+pygame.quit()
+quit()
