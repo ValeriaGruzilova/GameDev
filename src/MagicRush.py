@@ -14,16 +14,18 @@ pygame.display.set_caption('Magic Rush')
 pygame.display.set_icon(ICON)
 
 scores = 0
-max_scores = 0
-
 health = 2
 
 game_state = GameState()
 info = Save()
-records = Record(info.get_data('hs'))
 
+if info.get_data('hs') == 0:
+    info.add('hs', 0)
+if info.get_data('rec') == 0:
+    info.add('rec', {})
+records = Record(info.get_data('rec'))
 
-# info.add('hs', {})
+max_scores = info.get_data('hs')
 
 
 def start():
@@ -34,7 +36,6 @@ def start():
         Returns:
             None.
     """
-    info.save_data()
 
     while game_state.state != State.QUIT:
         if game_state.state == State.MENU:
@@ -42,9 +43,12 @@ def start():
         elif game_state.state == State.START:
             launch_game()
         elif game_state.state == State.SCORES_TABLE:
-            show_scores(0)
+            show_scores(need_input=False)
         elif game_state.state == State.SCORES_TABLE_ENTER:
-            show_scores(1)
+            show_scores(need_input=True)
+
+    info.add('hs', max_scores)
+    info.add('rec', records.rec_table)
 
 
 def show_menu():
@@ -116,8 +120,9 @@ def show_scores(need_input):
                 quit()
             if need_input and event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
-                    need_input = False
+                    records.rec_table = records.update(input_text, scores)
                     input_text = ''
+                    need_input = False
                 elif event.key == pygame.K_BACKSPACE:
                     input_text = input_text[:-1]
                 else:
@@ -132,6 +137,9 @@ def show_scores(need_input):
         if need_input:
             print_text("Enter your name:", 200, 440, 40)
             print_text(input_text, 440, 440, 40)
+
+        if info.get_data('rec') is not None:
+            records.print_table(250, 195)
 
         pygame.display.update()
         CLOCK.tick(60)
@@ -231,12 +239,12 @@ def launch_game():
     global scores
     global health
 
+    scores = 0
+    health = 2
+
     while run_game():
         scores = 0
         health = 2
-
-    scores = 0
-    health = 2
 
 
 def jump(make_jump, usr_y, jump_counter):
@@ -413,9 +421,9 @@ def game_over():
         boolean value that means whether there is a signal from the user to end the game or not.
     """
     global scores, max_scores
-    if scores > max_scores:
-        max_scores = scores
-        # record in table
+    if scores > records.get_min_score():
+        if scores > max_scores:
+            max_scores = scores
         game_state.set_state(State.SCORES_TABLE_ENTER)
         return True
 
