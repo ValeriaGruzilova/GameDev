@@ -30,5 +30,4 @@ FONT_TYPE = 'assets/background/font.ttf'
 CLOCK = pygame.time.Clock()
 
 MENU_BACKGR = pygame.image.load('assets/background/menu.png')
-
-HSCORES_BACKGR = pygame.image.load('assets/background/table_backgr.png')
+REC_BACKGR = pygame.image.load('assets/background/table.png')

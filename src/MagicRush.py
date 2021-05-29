@@ -42,7 +42,9 @@ def start():
         elif game_state.state == State.START:
             launch_game()
         elif game_state.state == State.SCORES_TABLE:
-            show_scores()
+            show_scores(0)
+        elif game_state.state == State.SCORES_TABLE_ENTER:
+            show_scores(1)
 
 
 def show_menu():
@@ -59,9 +61,11 @@ def show_menu():
 
     show = True
     start_message = "START GAME"
+    rec_message = "RECORDS"
     quit_message = "EXIT"
 
     start_button = Button(180, 55)
+    rec_button = Button(140, 55)
     quit_button = Button(110, 55)
 
     while show:
@@ -74,7 +78,10 @@ def show_menu():
         if start_button.draw(310, 320, start_message):
             game_state.set_state(State.START)
             return
-        if quit_button.draw(340, 420, quit_message):
+        if rec_button.draw(330, 400, rec_message):
+            game_state.set_state(State.SCORES_TABLE)
+            return
+        if quit_button.draw(345, 480, quit_message):
             game_state.set_state(State.QUIT)
             return
 
@@ -84,17 +91,16 @@ def show_menu():
     pygame.mixer.music.stop()
 
 
-def show_scores():
+def show_scores(need_input):
     pygame.mixer.music.load('assets/background/menu_music.mp3')
     pygame.mixer.music.set_volume(0.3)
     pygame.mixer.music.play(-1)
 
     show = True
-    need_input = False
     input_text = ''
 
     back_message = "BACK TO MENU"
-    back_button = Button(190, 55)
+    back_button = Button(185, 55)
 
     while show:
         for event in pygame.event.get():
@@ -111,18 +117,14 @@ def show_scores():
                     if len(input_text) < 10:
                         input_text += event.unicode
 
-        DISPLAY.blit(HSCORES_BACKGR, (0, 0))
+        DISPLAY.blit(REC_BACKGR, (0, 0))
         if back_button.draw(305, 500, back_message):
             game_state.set_state(State.MENU)
-            return
+            show = False
 
-        print_text('RECORDS', 320, 40, 50)
-
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_TAB]:
-            need_input = True
-
-        print_text(input_text, 200, 300, 30)
+        if need_input:
+            print_text("Enter your name:", 200, 440, 40)
+            print_text(input_text, 440, 440, 40)
 
         pygame.display.update()
         CLOCK.tick(60)
@@ -228,8 +230,6 @@ def launch_game():
 
     scores = 0
     health = 2
-
-    #game_state.set_state(State.MENU)
 
 
 def jump(make_jump, usr_y, jump_counter):
@@ -406,10 +406,10 @@ def game_over():
         boolean value that means whether there is a signal from the user to end the game or not.
     """
     global scores, max_scores
-    if scores >= max_scores:
+    if scores > max_scores:
         max_scores = scores
         # record in table
-        game_state.set_state(State.SCORES_TABLE)
+        game_state.set_state(State.SCORES_TABLE_ENTER)
         return True
 
     stopped = True

@@ -5,7 +5,8 @@ class State(Enum):
     MENU = 0,
     START = 1,
     SCORES_TABLE = 2,
-    QUIT = 3
+    SCORES_TABLE_ENTER = 3,
+    QUIT = 4
 
 
 class GameState:
