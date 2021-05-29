@@ -1,4 +1,4 @@
-from constants import pygame, DISPLAY, FONT_TYPE, FONT_COLOR
+from constants import pygame, DISPLAY, DISPLAY_WIDTH, FONT_TYPE, FONT_COLOR
 
 
 class Button:
@@ -30,7 +30,7 @@ class Button:
             None.
         """
         mouse_coord = pygame.mouse.get_pos()
-        # mouse_coord[0] = x; mouse_coord[1] = y
+        # mouse_coord[0] = x_mouse; mouse_coord[1] = y_mouse
         click = pygame.mouse.get_pressed()
         pygame.draw.rect(DISPLAY, self.inactive_color, (x_btn, y_btn, self.width, self.height))
         if x_btn < mouse_coord[0] < x_btn + self.width:

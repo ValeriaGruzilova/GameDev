@@ -4,7 +4,7 @@ from Object import *
 from Button import *
 from GameState import *
 from Save import *
-from HighScore import *
+from Record import *
 
 pygame.mixer.pre_init(44100, -16, 1, 512)
 pygame.init()
@@ -20,7 +20,7 @@ health = 2
 
 game_state = GameState()
 info = Save()
-high_score = HighScore(info.get_data('hs'))
+records = Record(info.get_data('hs'))
 
 
 # info.add('hs', {})
@@ -29,10 +29,10 @@ high_score = HighScore(info.get_data('hs'))
 def start():
     """In accordance with the established states, calls the basic functions.
 
-            Args:
-                None.
-            Returns:
-                None.
+        Args:
+            None.
+        Returns:
+            None.
     """
     info.save_data()
 
@@ -48,7 +48,7 @@ def start():
 
 
 def show_menu():
-    """Demonstrates a menu with buttons.
+    """Demonstrates the menu with buttons.
 
         Args:
             None.
@@ -75,15 +75,15 @@ def show_menu():
                 quit()
 
         DISPLAY.blit(MENU_BACKGR, (0, 0))
-        if start_button.draw(310, 320, start_message):
+        if start_button.draw((DISPLAY_WIDTH - start_button.width) / 2, 320, start_message):
             game_state.set_state(State.START)
-            return
-        if rec_button.draw(330, 400, rec_message):
+            show = False
+        if rec_button.draw((DISPLAY_WIDTH - rec_button.width) / 2, 400, rec_message):
             game_state.set_state(State.SCORES_TABLE)
-            return
-        if quit_button.draw(345, 480, quit_message):
+            show = False
+        if quit_button.draw((DISPLAY_WIDTH - quit_button.width) / 2, 480, quit_message):
             game_state.set_state(State.QUIT)
-            return
+            show = False
 
         pygame.display.update()
         CLOCK.tick(60)
@@ -92,6 +92,13 @@ def show_menu():
 
 
 def show_scores(need_input):
+    """Demonstrates the table of 5 records.
+
+        Args:
+            need_input: boolean statement indicating whether to enter a new name.
+        Returns:
+            None.
+    """
     pygame.mixer.music.load('assets/background/menu_music.mp3')
     pygame.mixer.music.set_volume(0.3)
     pygame.mixer.music.play(-1)
@@ -118,7 +125,7 @@ def show_scores(need_input):
                         input_text += event.unicode
 
         DISPLAY.blit(REC_BACKGR, (0, 0))
-        if back_button.draw(305, 500, back_message):
+        if back_button.draw((DISPLAY_WIDTH - back_button.width) / 2, 500, back_message):
             game_state.set_state(State.MENU)
             show = False
 
