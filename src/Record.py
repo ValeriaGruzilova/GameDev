@@ -14,7 +14,7 @@ class Record:
         return self.rec_table
 
     def print_table(self, x, y):
-        step_x = 240
+        step_x = 225
         step_y = 50
         font = pygame.font.Font(FONT_TYPE, 30)
         for name, score in reversed(self.rec_table.items()):

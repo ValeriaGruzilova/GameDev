@@ -130,7 +130,7 @@ def show_scores(need_input):
                         input_text += event.unicode
 
         DISPLAY.blit(REC_BACKGR, (0, 0))
-        if back_button.draw((DISPLAY_WIDTH - back_button.width) / 2, 500, back_message):
+        if back_button.draw((DISPLAY_WIDTH - back_button.width) / 2, 520, back_message):
             game_state.set_state(State.MENU)
             show = False
 
@@ -139,7 +139,7 @@ def show_scores(need_input):
             print_text(input_text, 440, 440, 40)
 
         if info.get_data('rec') is not None:
-            records.print_table(250, 195)
+            records.print_table(260, 195)
 
         pygame.display.update()
         CLOCK.tick(60)
