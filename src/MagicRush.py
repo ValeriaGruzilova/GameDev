@@ -59,7 +59,7 @@ def show_menu():
         Returns:
             None.
     """
-    pygame.mixer.music.load('assets/background/menu_music.mp3')
+    pygame.mixer.music.load(MENU_MUSIC)
     pygame.mixer.music.set_volume(0.3)
     pygame.mixer.music.play(-1)
 
@@ -75,8 +75,10 @@ def show_menu():
     while show:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                info.add('hs', max_scores)
+                info.add('rec', records.rec_table)
                 pygame.quit()
-                quit()
+                sys.exit()
 
         DISPLAY.blit(MENU_BACKGR, (0, 0))
         if start_button.draw((DISPLAY_WIDTH - start_button.width) / 2, 320, start_message):
@@ -103,7 +105,7 @@ def show_scores(need_input):
         Returns:
             None.
     """
-    pygame.mixer.music.load('assets/background/menu_music.mp3')
+    pygame.mixer.music.load(MENU_MUSIC)
     pygame.mixer.music.set_volume(0.3)
     pygame.mixer.music.play(-1)
 
@@ -116,8 +118,10 @@ def show_scores(need_input):
     while show:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                info.add('hs', max_scores)
+                info.add('rec', records.rec_table)
                 pygame.quit()
-                quit()
+                sys.exit()
             if need_input and event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
                     records.rec_table = records.update(input_text, scores)
@@ -155,7 +159,7 @@ def run_game():
     Returns:
         boolean value that means whether there is a signal from the user to end the game or not.
     """
-    pygame.mixer.music.load('assets/background/music.mp3')
+    pygame.mixer.music.load(MUSIC)
     pygame.mixer.music.set_volume(0.2)
 
     pygame.mixer.music.play(-1)
@@ -163,7 +167,7 @@ def run_game():
     game = True
     barrier_arr = []
     create_barrier_arr(barrier_arr)
-    background = pygame.image.load('assets/background/backgr.png')
+
     background_x = 0
 
     make_jump = False
@@ -181,8 +185,10 @@ def run_game():
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                info.add('hs', max_scores)
+                info.add('rec', records.rec_table)
                 pygame.quit()
-                quit()
+                sys.exit()
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_SPACE]:
@@ -197,8 +203,8 @@ def run_game():
         x_rel = background_x % DISPLAY_WIDTH
         x_part2 = x_rel - DISPLAY_WIDTH if x_rel > 0 else x_rel + DISPLAY_WIDTH
 
-        DISPLAY.blit(background, (x_rel, 0))
-        DISPLAY.blit(background, (x_part2, 0))
+        DISPLAY.blit(BACKGROUND, (x_rel, 0))
+        DISPLAY.blit(BACKGROUND, (x_part2, 0))
 
         print_text("Score: " + str(scores), 20, 80, 45)
         print_text("High score: " + str(max_scores), 20, 130, 35)
@@ -373,8 +379,10 @@ def pause():
     while paused:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                info.add('hs', max_scores)
+                info.add('rec', records.rec_table)
                 pygame.quit()
-                quit()
+                sys.exit()
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_RETURN]:
@@ -431,8 +439,10 @@ def game_over():
     while stopped:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                info.add('hs', max_scores)
+                info.add('rec', records.rec_table)
                 pygame.quit()
-                quit()
+                sys.exit()
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_RETURN]:
@@ -544,4 +554,4 @@ def change_speed(barriers, heart):
 
 start()
 pygame.quit()
-quit()
+sys.exit()
