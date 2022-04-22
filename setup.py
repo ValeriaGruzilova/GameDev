@@ -6,7 +6,7 @@ with open('README.md', 'r', encoding='utf-8') as fh:
 
 cmdclass = {'build_sphinx': BuildDoc}
 name = 'Magic Rush'
-version = '0.0.1'
+version = '0.0.2'
 
 setuptools.setup(
     name=name,

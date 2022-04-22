@@ -1,4 +1,4 @@
-[build-system]
+[build-system] 
 requires = [
 	"pygame>=2",
 	"setuptools>=54",
