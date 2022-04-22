@@ -101,9 +101,9 @@ def show_scores(need_input):
     """Demonstrates the table of 5 records.
 
         Args:
-            need_input: boolean statement indicating whether to enter a new name.
+            need_input: boolean statement indicating whether to enter a new name
         Returns:
-            None.
+            None
     """
     pygame.mixer.music.load(MENU_MUSIC)
     pygame.mixer.music.set_volume(0.3)
@@ -155,7 +155,7 @@ def run_game():
     """Basic application function that calls helper functions and starts the main processes.
 
     Args:
-        None.
+        None
     Returns:
         boolean value that means whether there is a signal from the user to end the game or not.
     """
